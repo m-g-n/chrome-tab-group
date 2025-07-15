@@ -1,0 +1,28 @@
+[
+  {
+    "groupName": "仕事",
+    "color": "blue",
+    "tabs": [
+      "https://mail.google.com/",
+      "https://calendar.google.com/",
+      "https://drive.google.com/"
+    ]
+  },
+  {
+    "groupName": "調査",
+    "color": "green", 
+    "tabs": [
+      "https://github.com/",
+      "https://stackoverflow.com/",
+      "https://developer.mozilla.org/"
+    ]
+  },
+  {
+    "groupName": "SNS",
+    "color": "red",
+    "tabs": [
+      "https://twitter.com/",
+      "https://www.linkedin.com/"
+    ]
+  }
+]

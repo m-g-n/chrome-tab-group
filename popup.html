@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 350px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .section {
+      margin-bottom: 20px;
+    }
+    
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    button {
+      width: 100%;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #f8f9fa;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    button:hover {
+      background: #e9ecef;
+    }
+    
+    button.primary {
+      background: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    
+    button.primary:hover {
+      background: #0056b3;
+    }
+    
+    button.danger {
+      background: #dc3545;
+      color: white;
+      border-color: #dc3545;
+    }
+    
+    button.danger:hover {
+      background: #c82333;
+    }
+    
+    .file-input-wrapper {
+      position: relative;
+      margin-bottom: 8px;
+    }
+    
+    .file-input {
+      display: none;
+    }
+    
+    .file-input-label {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      border: 2px dashed #007bff;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      color: #007bff;
+      background: #f8f9ff;
+    }
+    
+    .file-input-label:hover {
+      background: #e7f3ff;
+    }
+    
+    .group-list {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 8px;
+    }
+    
+    .group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      background: #f8f9fa;
+    }
+    
+    .group-info {
+      flex-grow: 1;
+    }
+    
+    .group-name {
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    
+    .group-details {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .delete-btn {
+      width: auto;
+      padding: 4px 8px;
+      margin: 0;
+      margin-left: 8px;
+      font-size: 12px;
+    }
+    
+    .export-btn {
+      width: auto;
+      padding: 4px 8px;
+      margin: 0;
+      margin-left: 4px;
+      font-size: 12px;
+      background: #28a745;
+      color: white;
+      border-color: #28a745;
+    }
+    
+    .export-btn:hover {
+      background: #218838;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 4px;
+    }
+    
+    .status {
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Tab Group Manager</h2>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">JSONファイルから読み込み</div>
+    <div class="file-input-wrapper">
+      <input type="file" id="jsonFileInput" class="file-input" accept=".json">
+      <label for="jsonFileInput" class="file-input-label">
+        JSONファイルを選択
+      </label>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">エクスポート</div>
+    <button id="exportAllGroups" class="export-btn primary">全グループをエクスポート</button>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">現在のタブグループ</div>
+    <button id="refreshGroups">更新</button>
+    <div id="groupsList" class="group-list">
+      読み込み中...
+    </div>
+  </div>
+  
+  <div id="status" class="status hidden"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
