@@ -18,11 +18,11 @@ class PopupUI {
     this.exportAllGroupsBtn.addEventListener('click', () => this.exportAllGroups());
     
     this.jsonFileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const fileName = file.name;
-        document.querySelector('.file-input-label').textContent = fileName;
-        this.loadFromJsonFile();
+      const files = Array.from(e.target.files);
+      if (files.length > 0) {
+        const fileNames = files.length === 1 ? files[0].name : `${files.length}個のファイル`;
+        document.querySelector('.file-input-label').textContent = fileNames;
+        this.loadFromJsonFiles(files);
       } else {
         document.querySelector('.file-input-label').textContent = 'JSONファイルを選択';
       }
@@ -45,25 +45,32 @@ class PopupUI {
     }, 3000);
   }
 
-  async loadFromJsonFile() {
-    const file = this.jsonFileInput.files[0];
-    if (!file) {
+  async loadFromJsonFiles(files) {
+    if (!files || files.length === 0) {
       this.showStatus('JSONファイルを選択してください', 'error');
       return;
     }
 
     try {
-      const text = await this.readFileAsText(file);
-      const groupsData = JSON.parse(text);
+      const allGroupsData = [];
+      let totalGroups = 0;
       
-      if (!Array.isArray(groupsData)) {
-        throw new Error('JSONファイルは配列形式である必要があります');
+      for (const file of files) {
+        const text = await this.readFileAsText(file);
+        const groupsData = JSON.parse(text);
+        
+        if (!Array.isArray(groupsData)) {
+          throw new Error(`「${file.name}」は配列形式である必要があります`);
+        }
+        
+        allGroupsData.push(...groupsData);
+        totalGroups += groupsData.length;
       }
 
-      const result = await this.sendMessage('createGroupsFromJSON', { data: groupsData });
+      const result = await this.sendMessage('createGroupsFromJSON', { data: allGroupsData });
       
       if (result.success) {
-        this.showStatus(`${result.groups.length}個のタブグループを作成しました`);
+        this.showStatus(`${files.length}個のファイルから${result.groups.length}個のタブグループを作成しました`);
         this.loadCurrentGroups();
       } else {
         this.showStatus(`エラー: ${result.error}`, 'error');
